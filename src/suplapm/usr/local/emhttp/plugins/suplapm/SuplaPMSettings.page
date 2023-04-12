@@ -1,0 +1,31 @@
+Menu="Utilities"
+Icon="suplapm.png"
+Title="Supla Power Monitor"
+---
+<?php
+$suplapm_cfg 			= parse_plugin_cfg("suplapm",true);
+$suplapm_device_url	= isset($suplapm_cfg['DEVICE_URL']) ? $suplapm_cfg['DEVICE_URL'] : "";
+$suplapm_uirefresh 		= isset($suplapm_cfg['UIREFRESH']) ? $suplapm_cfg['UIREFRESH'] : "5";
+?>
+
+<form markdown="1" method="POST" action="/update.php" target="progressFrame">
+<input type="hidden" name="#file" value="suplapm/suplapm.cfg" />
+
+Device URL:
+: <input id="DEVICE_URL" type="text" class="stopped" name="DEVICE_URL" value="<?=$suplapm_device_url;?>" title="" placeholder="https://svr1.supla.org/direct/ID/KEY" >  
+
+UI Refresh rate:
+: <input type="number" name="UIREFRESH" class="narrow" maxlength="3" size="1" value="<?=$suplapm_uirefresh;?>" placeholder="5"> seconds
+
+
+ <input id="DEFAULT" class="stopped" type="submit" value="Default" onClick="resetDATA(this.form)">
+: <input id="btnApply" type="submit" value="Apply"><input type="button" value="Done" onClick="done()">
+</form>
+
+
+<script type="text/javascript">
+function resetDATA(form) {
+	form.DEVICE_URL.value = "";
+  form.UIREFRESH.value = 5;
+}
+</script>

@@ -1,0 +1,95 @@
+Menu="Dashboard"
+Icon="ups"
+---
+<style type="text/css">
+    <?php
+        $suplapm_cfg = parse_plugin_cfg("suplapm",true);
+        $sortnr = $N+970
+    ?>
+    #dash_suplapm_settings i, #suplapm_view {margin-top:0px;}  
+</style>
+<table id='db-box1' class='dash_suplapm dashboard box1' style="display:none">
+    <thead sort='<?=$sortnr?>'>
+	    <tr class='hidden'>
+		    <td></td>
+		    <td colspan='3'></td>
+		<td></td>
+	    </tr>
+    </thead>
+    <tbody class='sortable' sort='<?=$sortnr?>'>
+	    <tr>
+		    <td></td>
+		    <td colspan='3' class='next'>
+                <i class='icon-ups'></i>
+                <div class='section'>_(Supla Power Monitor)_<br><span id='load section'>_(Power Consumption)_: <span class='suplapm-power'>0</span> W</span><br><br></div>
+                <i class='fa fa-fw chevron' id='suplapm_view' onclick='toggleChevron("suplapm_view",0)'></i>
+                <a href='/Settings/SuplaPowerMonitor' title="_(Go to Supla Power Monitor settings)_"><i class='fa fa-fw fa-cog chevron'></i></a>
+            </td>
+            <td></td>
+
+            <tr class="suplapm_view">
+                <td></td>
+                <td>Parameters:</td>
+                <td><span class="suplapm-voltage"></span> V  &nbsp;×&nbsp;  <span class="suplapm-current"></span> A &nbsp;=&nbsp; <span class="suplapm-power"></span> W</td>
+                <td></td>
+            </tr>
+            <tr class="suplapm_view">
+                <td></td>
+                <td>Total:</td>
+                <td><span class="suplapm-total"></span> kWh</td>
+                <td><span class="suplapm-costs_total"></span> <span class="suplapm-costs_unit"></span></td>
+                <td></td>
+            </tr>
+            <tr class="suplapm_view">
+                <td></td>
+                <td>Apparent power:</td>
+                <td><span class="suplapm-apparentpower"></span> VA</td>
+                <td></td>
+            </tr>
+            <tr class="suplapm_view">
+                <td></td>
+                <td>Reactive power:</td>
+                <td><span class="suplapm-reactivepower"></span> VAr</td>
+                <td></td>
+            </tr>
+            <tr class="suplapm_view">
+                <td></td>
+                <td>Power Factor:</td>
+                <td><span class="suplapm-efficiency"></span> %</td>
+                <td></td>
+            </tr>
+        </tr>
+    </tbody>
+</table>
+<script>
+const suplapm_status = () => {
+    $.getJSON("/plugins/suplapm/status.php", (data) => {
+        if (data) {
+            $(".suplapm-power").html(data.Power);
+            $(".suplapm-voltage").html(data.Voltage);
+            $(".suplapm-current").html(data.Current);
+            $(".suplapm-total").html(Number.parseFloat(data.Energy).toFixed(2));
+            $(".suplapm-apparentpower").html(data.ApparentPower);
+            $(".suplapm-reactivepower").html(data.ReactivePower);
+            $(".suplapm-efficiency").html(data.Factor.toFixed(1));
+            $(".suplapm-costs_total").html((Number.parseFloat(data.Costs_Price) * Number.parseFloat(data.Energy)).toFixed(2));
+            $(".suplapm-costs_unit").html(data.Costs_Unit);
+        }
+    });
+};
+$(suplapm_status);
+if (<?=$suplapm_cfg['UIREFRESH'];?>) {
+    setInterval(suplapm_status, <?=$suplapm_cfg['UIREFRESH'];?>*1000);
+}
+
+$(function() {
+  // append data from the table into the correct one
+  $("#db-box1").append($(".dash_suplapm").html());
+  
+  // reload toggle to get the correct state
+  toggleView('suplapm_view',true);
+  
+  // reload sorting to get the stored data (cookie)
+  sortTable($('#db-box1'),$.cookie('db-box1'));
+});
+</script>
