@@ -1,0 +1,72 @@
+Menu="Dashboard:0"
+Cond="version_compare(parse_ini_file('/etc/unraid-version')['version'],'6.11.9','>')"
+---
+<?php
+$suplapm_cfg = parse_plugin_cfg("suplapm", true);
+$mytiles['suplapm']['column1'] =
+<<<EOT
+<tbody title='_(Supla Power Monitor)_'>
+    <tr><td>
+        <i class='icon-ups f32'></i>
+        <div class='section'>_(Supla Power Monitor)_<br>
+            <span id='load section'>_(Power Consumption)_: <span class='suplapm-power'>0</span> W</span>
+        </div>
+        <a href='/Settings/SuplaPowerMonitor' title="_(Go to Supla Power Monitor settings)_"><i class='fa fa-fw fa-cog control'></i></a>
+    </td></tr>
+
+    <tr><td>
+        <span class="w26">Parameters:</span>
+        <span class="w26"><span class="suplapm-voltage"></span> V  &nbsp;×&nbsp;  <span class="suplapm-current"></span> A &nbsp;=&nbsp; <span class="suplapm-power"></span> W</span>
+    </td></tr>
+    <tr><td>
+        <span class="w26">Total Usage:</span>
+        <span class="w26"><span class="suplapm-total"></span> kWh = <span class="suplapm-costs_total"></span> <span class="suplapm-costs_unit"></span></span>
+    </td></tr>
+    <tr><td>
+        <span class="w26">Apparent Power:</span>
+        <span class="w26"><span class="suplapm-apparentpower"></span> VA</span>
+    </td></tr>
+    <tr><td>
+        <span class="w26">Reactive Power:</span>
+        <span class="w26"><span class="suplapm-reactivepower"></span> VAr</span>
+    </td></tr>
+    <tr><td>
+        <span class="w26">Power Factor:</span>
+        <span class="w26"><span class="suplapm-efficiency"></span> %</span>
+    </td></tr>
+</tbody>
+EOT;
+?>
+
+<script>
+const suplapm_status = () => {
+    $.getJSON("/plugins/suplapm/getDataSupla.php", (data) => {
+        if (data) {
+            $(".suplapm-power").html(data.Power);
+            $(".suplapm-voltage").html(data.Voltage);
+            $(".suplapm-current").html(data.Current);
+            $(".suplapm-total").html(Number.parseFloat(data.Energy).toFixed(2));
+            $(".suplapm-apparentpower").html(data.ApparentPower);
+            $(".suplapm-reactivepower").html(data.ReactivePower);
+            $(".suplapm-efficiency").html(data.Factor.toFixed(1));
+            $(".suplapm-costs_total").html((Number.parseFloat(data.Costs_Price) * Number.parseFloat(data.Energy)).toFixed(2));
+            $(".suplapm-costs_unit").html(data.Costs_Unit);
+        }
+    });
+};
+$(suplapm_status);
+if (<?=$suplapm_cfg['UIREFRESH'];?>) {
+    setInterval(suplapm_status, <?=$suplapm_cfg['UIREFRESH'];?>*1000);
+}
+
+$(function() {
+  // append data from the table into the correct one
+  $("#db-box1").append($(".dash_suplapm").html());
+  
+  // reload toggle to get the correct state
+  toggleView('suplapm_view',true);
+  
+  // reload sorting to get the stored data (cookie)
+  sortTable($('#db-box1'),$.cookie('db-box1'));
+});
+</script>

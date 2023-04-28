@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "suplapm">
 <!ENTITY author    "Matis">
-<!ENTITY version   "2023.02.25">
+<!ENTITY version   "2023.04.28">
 <!ENTITY launch    "Settings/SuplaPowerMonitor">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/MatisOne/&name;-unraid/main">
 <!ENTITY pluginURL "&gitURL;/&name;.plg">
@@ -14,6 +14,10 @@
 <PLUGIN name="&name;" author="&author;" version="&version;" icon="espurnapm.png" launch="&launch;" pluginURL="&pluginURL;">
 <CHANGES>
 ##&name;
+###2023.04.28
+- Update to unRAID 6.12
+- Tile is movable
+- Changed file names
 ###2023.02.25
 - Inital release.
 </CHANGES>

@@ -1,4 +1,5 @@
 Menu="Dashboard"
+Cond="version_compare(parse_ini_file('/etc/unraid-version')['version'],'6.11.9', '<')"
 Icon="ups"
 ---
 <style type="text/css">
@@ -63,7 +64,7 @@ Icon="ups"
 </table>
 <script>
 const suplapm_status = () => {
-    $.getJSON("/plugins/suplapm/status.php", (data) => {
+    $.getJSON("/plugins/suplapm/getDataSupla.php", (data) => {
         if (data) {
             $(".suplapm-power").html(data.Power);
             $(".suplapm-voltage").html(data.Voltage);
