@@ -38,6 +38,19 @@ $mytiles['suplapm']['column1'] =
 EOT;
 ?>
 
+<style type="text/css">
+    /* Prevent truncation/ellipsis in movable tile: allow wrapping and visible overflow */
+    .dash_suplapm .section, .dash_suplapm .section * {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        word-break: break-word !important;
+    }
+    .dash_suplapm .suplapm-power, .dash_suplapm .suplapm-total {
+        white-space: nowrap !important;
+    }
+</style>
+
 <script>
 const suplapm_status = () => {
     $.getJSON("/plugins/suplapm/getDataSupla.php", (data) => {
