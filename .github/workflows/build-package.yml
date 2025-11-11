@@ -5,17 +5,12 @@ on:
   push:
     branches: [ main ]
 
-permissions:
-  contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          persist-credentials: true
 
       - name: Ensure mkpkg is executable
         run: |
@@ -26,7 +21,6 @@ jobs:
           sudo apt-get update && sudo apt-get install -y --no-install-recommends xz-utils makepkg || true
 
       - name: Build package (try mkpkg, fallback to tar)
-        id: buildpkg
         run: |
           set -e
           mkdir -p pkg
@@ -49,28 +43,6 @@ jobs:
 
       - name: List pkg/
         run: ls -la pkg || true
-
-      - name: Detect created package
-        id: detect
-        run: |
-          set -e
-          pkgfile=$(ls -t pkg/*.txz 2>/dev/null | head -n1 || true)
-          if [ -n "$pkgfile" ]; then
-            echo "package=$pkgfile" >> "$GITHUB_OUTPUT"
-            echo "found=1" >> "$GITHUB_OUTPUT"
-          else
-            echo "found=0" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Commit package back to repo (only on manual run)
-        if: ${{ github.event_name == 'workflow_dispatch' && steps.detect.outputs.found == '1' }}
-        run: |
-          set -e
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add pkg/*.txz pkg/*.md5 || true
-          git commit -m "build: add package from workflow" || echo "no changes to commit"
-          git push origin HEAD
 
       - name: Upload package
         uses: actions/upload-artifact@v4
