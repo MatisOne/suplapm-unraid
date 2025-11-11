@@ -2,7 +2,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "suplapm">
 <!ENTITY author    "Matis">
-<!ENTITY version   "2023.04.28">
+<!ENTITY version   "2025.11.11">
 <!ENTITY launch    "Settings/SuplaPowerMonitor">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/MatisOne/&name;-unraid/main">
 <!ENTITY pluginURL "&gitURL;/&name;.plg">
@@ -13,7 +13,8 @@
 ]>
 <PLUGIN name="&name;" author="&author;" version="&version;" icon="suplapm.png" launch="&launch;" pluginURL="&pluginURL;">
 <CHANGES>
-##&name;
+###2025.11.11
+- update plugin
 ###2023.04.28
 - Update to unRAID 6.12
 - Tile is movable
@@ -22,13 +23,17 @@
 - Inital release.
 </CHANGES>
 
+ <FILE Name="&emhttp;/suplapm.png">
+  <URL>&gitURL;/suplapm.png</URL>
+ </FILE>
+
  <FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.11.9" Run="upgradepkg --install-new">
   <URL>&pkgURL;/&plgNAME;.txz</URL>
  </FILE>
  <FILE Run="/bin/bash" Method="remove">
   <INLINE>
    echo "Removing &name;..."
-   removepkg &plgPATH;/*.txz
+   removepkg &name;
    rm -rf &plgPATH;
    rm -rf &emhttp;
    echo "&name; has been removed"

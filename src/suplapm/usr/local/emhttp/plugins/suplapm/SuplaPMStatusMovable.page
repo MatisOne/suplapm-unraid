@@ -40,7 +40,7 @@ EOT;
 
 <style type="text/css">
     /* Prevent truncation/ellipsis in movable tile: allow wrapping and visible overflow */
-    .dash_suplapm .section, .dash_suplapm .section * {
+    .dash_suplapm td {
         white-space: normal !important;
         overflow: visible !important;
         text-overflow: clip !important;
