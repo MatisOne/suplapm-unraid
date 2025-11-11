@@ -5,9 +5,20 @@ Icon="ups"
 <style type="text/css">
     <?php
         $suplapm_cfg = parse_plugin_cfg("suplapm",true);
-        $sortnr = $N+970
+        $sortnr = $N+970;
     ?>
     #dash_suplapm_settings i, #suplapm_view {margin-top:0px;}  
+    /* Prevent truncation/ellipsis in dashboard tile: allow wrapping and visible overflow */
+    .dash_suplapm .section, .dash_suplapm .section * {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        word-break: break-word !important;
+    }
+    /* Keep numeric values compact */
+    .dash_suplapm .suplapm-power, .dash_suplapm .suplapm-total {
+        white-space: nowrap !important;
+    }
 </style>
 <table id='db-box1' class='dash_suplapm dashboard box1' style="display:none">
     <thead sort='<?=$sortnr?>'>

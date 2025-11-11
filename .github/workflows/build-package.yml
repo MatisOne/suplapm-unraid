@@ -1,0 +1,51 @@
+name: Build plugin package
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure mkpkg is executable
+        run: |
+          chmod +x src/mkpkg
+
+      - name: Install required packages
+        run: |
+          sudo apt-get update && sudo apt-get install -y --no-install-recommends xz-utils makepkg || true
+
+      - name: Build package (try mkpkg, fallback to tar)
+        run: |
+          set -e
+          mkdir -p pkg
+          echo "Trying to run src/mkpkg..."
+          if bash src/mkpkg src/suplapm; then
+            echo "mkpkg finished"
+          else
+            echo "mkpkg failed or not available; building fallback package with tar/xz"
+            VERSION=$(date +"%Y.%m.%d")
+            ARCH="-x86_64"
+            PACKAGE="pkg/suplapm-${VERSION}${ARCH}.txz"
+            TMPDIR=$(mktemp -d)
+            mkdir -p "${TMPDIR}/usr/local/emhttp/plugins/suplapm"
+            cp -a src/suplapm/. "${TMPDIR}/usr/local/emhttp/plugins/suplapm/"
+            tar -C "${TMPDIR}" -cJf "${PACKAGE}" usr
+            md5sum "${PACKAGE}" > "pkg/suplapm-${VERSION}${ARCH}.md5"
+            rm -rf "${TMPDIR}"
+            echo "Fallback package created: ${PACKAGE}"
+          fi
+
+      - name: List pkg/
+        run: ls -la pkg || true
+
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: suplapm-package
+          path: pkg/
