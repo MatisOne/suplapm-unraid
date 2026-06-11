@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Container version="2">
+  <Name>suplapm-plugin</Name>
+  <PluginURL>https://raw.githubusercontent.com/MatisOne/suplapm-unraid/main/suplapm.plg</PluginURL>
+  <Support>https://github.com/MatisOne/suplapm-unraid/issues</Support>
+  <Project>https://github.com/MatisOne/suplapm-unraid</Project>
+  <Overview>Supla Power Monitor Dashboard Plugin for unRAID</Overview>
+  <Category>Monitoring</Category>
+  <TemplateURL>https://raw.githubusercontent.com/MatisOne/suplapm-unraid/main/templates/suplapm-plugin.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/MatisOne/suplapm-unraid/main/suplapm.png</Icon>
+  <Description>
+Supla Power Monitor for unRAID
+
+A native unRAID dashboard plugin that integrates Supla power monitoring capabilities into your unRAID dashboard.
+
+Features:
+- Real-time power consumption monitoring
+- Supla integration for smart home automation
+- Dashboard tile display
+- Easy installation and configuration
+
+Installation: This plugin will be installed directly into your unRAID system.
+  </Description>
+</Container>
