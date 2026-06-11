@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Container version="2">
+  <Name>suplapm</Name>
+  <Repository>MatisOne/suplapm-unraid</Repository>
+  <Registry>ghcr.io</Registry>
+  <Network>bridge</Network>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/MatisOne/suplapm-unraid/issues</Support>
+  <Project>https://github.com/MatisOne/suplapm-unraid</Project>
+  <Overview>Supla Power Monitor for unRAID Dashboard Plugin</Overview>
+  <Category>Monitoring</Category>
+  <WebUI></WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/MatisOne/suplapm-unraid/main/templates/suplapm.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/MatisOne/suplapm-unraid/main/suplapm.png</Icon>
+  <Description>
+Supla Power Monitor for unRAID Dashboard Plugin
+
+A dashboard plugin for unRAID that monitors power consumption using Supla integration.
+  </Description>
+  <Networking>
+    <Mode>bridge</Mode>
+    <Publish>
+      <Port>
+        <HostPort>8080</HostPort>
+        <ContainerPort>8080</ContainerPort>
+        <Protocol>tcp</Protocol>
+      </Port>
+    </Publish>
+  </Networking>
+  <Data/>
+  <Environment/>
+  <Labels/>
+  <Config Name="AppData" Target="/data" Default="/mnt/user/appdata/suplapm" Mode="rw" Description="Application data directory" Type="Path" Display="advanced" Required="false" Mask="false"/>
+</Container>
