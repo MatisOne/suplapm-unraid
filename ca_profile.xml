@@ -1,7 +1,5 @@
 <CommunityApplications>
   <Profile>
-    <Name>MatisOne Repository</Name>
-    <Description>Supla Power Monitor for unRAID</Description>
-    <TemplateRepositoryURL>https://raw.githubusercontent.com/MatisOne/suplapm-unraid/main</TemplateRepositoryURL>
+    MatisOne Repository
   </Profile>
 </CommunityApplications>
