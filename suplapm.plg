@@ -25,10 +25,12 @@
 
  <FILE Name="&emhttp;/suplapm.png">
   <URL>&gitURL;/suplapm.png</URL>
+  <SHA256>bd3b6951d726b2fb74da36d6dd75e8c19828138e1ac8b2124509cc40193b6269</SHA256>
  </FILE>
 
  <FILE Name="&plgPATH;/&plgNAME;.txz" Min="6.11.9" Run="upgradepkg --install-new">
   <URL>&pkgURL;/&plgNAME;.txz</URL>
+  <SHA256>01b306793aafa65f59a5be59beead1b960b3bb3470919921bd2304e15b445019</SHA256>
  </FILE>
  <FILE Run="/bin/bash" Method="remove">
   <INLINE>
